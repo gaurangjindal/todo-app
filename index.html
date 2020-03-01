@@ -1,90 +1,92 @@
-<html><head>
+<html>
+
+<head>
 
 
-    <tittle>to do list app</tittle>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<style>
-    .remove_btn{
-        display:none;
+  <tittle>to do list app</tittle>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <style>
+    .remove_btn {
+      display: none;
     }
-    li.list-group-item:hover > .remove_btn{
-        display:block;
-    }
-</style>
 
-</head>   
+    li.list-group-item:hover>.remove_btn {
+      display: block;
+    }
+  </style>
+
+</head>
+
 <body>
 
-        <div class="container">
-            <h1>javascript todo list</h1>
-            <br>
-            <div class="row">
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="task-input">
-                </div>
-                <div clas="col-md-4">
-                    <a href="#" class="btn btn-success " onclick="addEvent()"> Add task</a>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-8">
-                    <ul class="list-group" id=tasks>
-                    </ul>
-                </div>
-            </div>
-        </div>
+  <div class="container">
+    <h1>javascript todo list</h1>
+    <br>
+    <div class="row">
+      <div class="col-md-8">
+        <input type="text" class="form-control" id="task-input">
+      </div>
+      <div clas="col-md-4">
+        <a href="#" class="btn btn-success " onclick="addEvent()"> Add task</a>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-8">
+        <ul class="list-group" id="tasks">
+        </ul>
+      </div>
+    </div>
+  </div>
 
-        <script>
-    
-     //localStorage.tasks = JSON.stringify([]);
-
-function addEvent(){
-
-// take inout from input box
-//take task from localstorage
-// and then store in ul(array)
-// push (new element) into array 
-// update that array to local storage 
-//empty the input box
-// update list
-
-
-let input = document.getElementById("task-input");
-
-let tasks = JSON.parse(localStorage.tasks);
-
-tasksArr.push(input.value);
-
-localStorage.tasks = JSON.stringify(tasksArr);
-
-input.value = "";
-
-updateList();
-function updateList(){
-    // take ul(reference){tasks}
+  <script>
+    //localStorage.tasks = JSON.stringify([]);
     var ul = document.getElementById("tasks");
 
-    // get tasks from localstorage
-    var tasksArr = JSON.parse(localStorage.tasks);
-    var length = tasksArr.length;
-    var html = "";
+    function clearHtml() {
+      ul.innerHTML = '';
+    }
 
-    for( var i = 0; i< length ;i++){
-        console.log(taskArr[i]);
-         html += '<li class="list-group-item">' +taskArr[i] + '<span class="btn btn-danger btn-sm float-right remove_btn">Remove</span</li>';
+    function insertHtml(items) {
+      console.log(items);
+      clearHtml();
+      items.forEach((item,index) => {
+        let html = `<li class="list-group-item" id="${index}">' ${item} '<span class="btn btn-danger btn-sm float-right remove_btn" onclick = "removeItem(this)">Remove</span</li>`
+        ul.insertAdjacentHTML('beforeend', html);
+      });
 
     }
-    ul.innerHTML = html;
-    
+
+    const arr = [];
+
+    function addEvent() {
+
+      let input = document.getElementById("task-input");
+      console.log(input.value);
+      arr.push(input.value);
+      localStorage.setItem('tasks', JSON.stringify(arr));
+      console.log(JSON.parse(localStorage.tasks));
+      insertHtml(JSON.parse(localStorage.tasks));
+      updatList();
+    }
+
+    function removeItem(span_tag){
+        var index_id = span_tag.parentElement.id;    
+        var arr = JSON.parse(localStorage.tasks); 
+        arr.splice(index_id,1);
+
+       localStorage.tasks = JSON.stringify(arr);
+    }
+
+    function updatList(){
+        // take reference from the task id
+         var ul = document.getElementById("tasks");
+         var Taskarr = JSON.parse(localStorage.tasks);
 
 
-}
-}
+    }
 
+  </script>
+</body>
 
-
-
-        </script>
-    </body>
 </html>
