@@ -67,25 +67,22 @@
       localStorage.setItem('tasks', JSON.stringify(arr));
       console.log(JSON.parse(localStorage.tasks));
       insertHtml(JSON.parse(localStorage.tasks));
-      updatList();
+      //updatList();
     }
 
     function removeItem(span_tag){
         var index_id = span_tag.parentElement.id;    
         var arr = JSON.parse(localStorage.tasks); 
         arr.splice(index_id,1);
+        localStorage.removeItem('arr');
 
-       localStorage.tasks = JSON.stringify(arr);
+        localStorage.tasks = JSON.stringify(arr);
+       
+       clearHtml();
+       insertHtml(arr);
+       
     }
-
-    function updatList(){
-        // take reference from the task id
-         var ul = document.getElementById("tasks");
-         var Taskarr = JSON.parse(localStorage.tasks);
-
-
-    }
-
+    
   </script>
 </body>
 
